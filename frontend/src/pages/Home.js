@@ -1,24 +1,42 @@
 import { useEffect, useState } from 'react';
 import api from '../services/api';
 import { Link } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 
 const Home = () => {
   const [posts, setPosts] = useState([]);
+  const { user, logout } = useAuth();
 
   useEffect(() => {
     api.get('/posts')
-      .then(res => setPosts(res.data));
+      .then(res => setPosts(res.data))
+      .catch(err => console.error(err));
   }, []);
 
   return (
-    <div>
+    <div style={{ padding: '20px' }}>
       <h1>All Posts</h1>
-      {posts.map(post => (
-        <div key={post._id}>
-          <Link to={`/post/${post._id}`}>
-            <h3>{post.title}</h3>
+
+      {user ? (
+        <div style={{ marginBottom: '20px' }}>
+          <Link to="/create">
+            <button>Create Post</button>
           </Link>
-          <p>By {post.author.username}</p>
+          <button onClick={logout} style={{ marginLeft: '10px' }}>
+            Logout
+          </button>
+        </div>
+      ) : (
+        <Link to="/login">
+          <button>Login</button>
+        </Link>
+      )}
+
+      {posts.map(post => (
+        <div key={post._id} style={{ marginBottom: '20px' }}>
+          <h3>{post.title}</h3>
+          <p>By {post.author?.username}</p>
+          <p>{post.content}</p>
         </div>
       ))}
     </div>
