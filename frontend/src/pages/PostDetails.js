@@ -17,9 +17,25 @@ const PostDetails = () => {
   const [editData, setEditData] = useState({ title: '', content: '' });
 
   useEffect(() => {
-    fetchPost();
-    fetchComments();
-  }, []);
+  const fetchData = async () => {
+    try {
+      const postRes = await api.get(`/posts/${id}`);
+      setPost(postRes.data);
+      setLikes(postRes.data.likes.length);
+      setEditData({
+        title: postRes.data.title,
+        content: postRes.data.content
+      });
+
+      const commentRes = await api.get(`/comments/${id}`);
+      setComments(commentRes.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  fetchData();
+}, [id]);
 
   const fetchPost = async () => {
     const res = await api.get(`/posts/${id}`);
