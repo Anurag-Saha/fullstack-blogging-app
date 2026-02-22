@@ -22,6 +22,7 @@ const Home = () => {
           <Link to="/create">
             <button>Create Post</button>
           </Link>
+
           <button onClick={logout} style={{ marginLeft: '10px' }}>
             Logout
           </button>
@@ -33,9 +34,12 @@ const Home = () => {
       )}
 
       {posts.map(post => (
-        <div key={post._id} style={{ marginBottom: '20px' }}>
-          <h3>{post.title}</h3>
-          <p>By {post.author?.username}</p>
+        <div key={post._id} style={{ marginBottom: '20px', borderBottom: '1px solid #ccc', paddingBottom: '10px' }}>
+          <Link to={`/post/${post._id}`} style={{ textDecoration: 'none', color: 'black' }}>
+            <h3>{post.title}</h3>
+          </Link>
+
+          <p><strong>By:</strong> {post.author?.username}</p>
           <p>{post.content}</p>
         </div>
       ))}

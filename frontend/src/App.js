@@ -3,6 +3,7 @@ import { AuthProvider } from './context/AuthContext';
 import Login from './pages/Login';
 import Home from './pages/Home';
 import CreatePost from './pages/CreatePost';
+import PostDetails from './pages/PostDetails';
 import ProtectedRoute from './routes/ProtectedRoute';
 
 function App() {
@@ -21,6 +22,8 @@ function App() {
               </ProtectedRoute>
             }
           />
+
+          <Route path="/post/:id" element={<PostDetails />} />
 
         </Routes>
       </BrowserRouter>
