@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import api from '../services/api';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import './Home.css';
 
 const Home = () => {
   const [posts, setPosts] = useState([]);
@@ -14,35 +15,39 @@ const Home = () => {
   }, []);
 
   return (
-    <div style={{ padding: '20px' }}>
-      <h1>All Posts</h1>
-
-      {user ? (
-        <div style={{ marginBottom: '20px' }}>
-          <Link to="/create">
-            <button>Create Post</button>
-          </Link>
-
-          <button onClick={logout} style={{ marginLeft: '10px' }}>
-            Logout
-          </button>
+    <div className="home-container">
+      <nav className="navbar">
+        <h2 className="logo">BlogSphere</h2>
+        <div>
+          {user ? (
+            <>
+              <Link to="/create" className="btn primary">Create</Link>
+              <button onClick={logout} className="btn danger">Logout</button>
+            </>
+          ) : (
+            <Link to="/login" className="btn primary">Login</Link>
+          )}
         </div>
-      ) : (
-        <Link to="/login">
-          <button>Login</button>
-        </Link>
-      )}
+      </nav>
 
-      {posts.map(post => (
-        <div key={post._id} style={{ marginBottom: '20px', borderBottom: '1px solid #ccc', paddingBottom: '10px' }}>
-          <Link to={`/post/${post._id}`} style={{ textDecoration: 'none', color: 'black' }}>
-            <h3>{post.title}</h3>
-          </Link>
+      <div className="hero">
+        <h1>Share Your Thoughts With The World</h1>
+        <p>Create, explore, and connect through powerful blogging.</p>
+      </div>
 
-          <p><strong>By:</strong> {post.author?.username}</p>
-          <p>{post.content}</p>
-        </div>
-      ))}
+      <div className="posts-grid">
+        {posts.map(post => (
+          <div key={post._id} className="post-card">
+            <Link to={`/post/${post._id}`} className="post-link">
+              <h3>{post.title}</h3>
+            </Link>
+            <p className="author">By {post.author?.username}</p>
+            <p className="content-preview">
+              {post.content.substring(0, 100)}...
+            </p>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };

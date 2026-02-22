@@ -1,0 +1,70 @@
+.post-page {
+  min-height: 100vh;
+  padding: 40px 20px;
+  color: white;
+  background: linear-gradient(135deg, #1e1e2f, #111);
+}
+
+.post-card {
+  max-width: 800px;
+  margin: 0 auto 40px auto;
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(12px);
+  padding: 30px;
+  border-radius: 20px;
+}
+
+.post-card h1 {
+  margin-bottom: 10px;
+}
+
+.post-card .author {
+  color: #aaa;
+  font-size: 14px;
+}
+
+.post-card .content {
+  margin-top: 20px;
+  line-height: 1.6;
+}
+
+.actions {
+  margin-top: 20px;
+  display: flex;
+  gap: 10px;
+}
+
+.like-btn {
+  background: linear-gradient(45deg, #ff6b6b, #f06595);
+  border: none;
+  padding: 8px 16px;
+  border-radius: 20px;
+  cursor: pointer;
+  color: white;
+  transition: 0.3s;
+}
+
+.comment-section {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.comment-form {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.comment-form input {
+  flex: 1;
+  padding: 10px;
+  border-radius: 10px;
+  border: none;
+}
+
+.comment-card {
+  background: rgba(255,255,255,0.08);
+  padding: 12px;
+  border-radius: 12px;
+  margin-bottom: 10px;
+}

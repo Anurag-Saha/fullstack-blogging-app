@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import api from '../services/api';
+import './CreatePost.css';
 
 const CreatePost = () => {
   const [form, setForm] = useState({ title: '', content: '' });
@@ -8,30 +9,46 @@ const CreatePost = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     await api.post('/posts', form);
-
     navigate('/');
   };
 
   return (
-    <div>
-      <h2>Create Post</h2>
-      <form onSubmit={handleSubmit}>
-        <input
-          placeholder="Title"
-          value={form.title}
-          onChange={(e) => setForm({ ...form, title: e.target.value })}
-        />
+    <div className="create-page">
+      <div className="create-card">
+        <h1>Create New Post</h1>
 
-        <textarea
-          placeholder="Content"
-          value={form.content}
-          onChange={(e) => setForm({ ...form, content: e.target.value })}
-        />
+        <form onSubmit={handleSubmit}>
+          <div className="input-group">
+            <label>Title</label>
+            <input
+              type="text"
+              placeholder="Enter post title"
+              value={form.title}
+              onChange={(e) =>
+                setForm({ ...form, title: e.target.value })
+              }
+              required
+            />
+          </div>
 
-        <button type="submit">Publish</button>
-      </form>
+          <div className="input-group">
+            <label>Content</label>
+            <textarea
+              placeholder="Write your thoughts..."
+              value={form.content}
+              onChange={(e) =>
+                setForm({ ...form, content: e.target.value })
+              }
+              required
+            />
+          </div>
+
+          <button type="submit" className="create-btn">
+            Publish Post 🚀
+          </button>
+        </form>
+      </div>
     </div>
   );
 };

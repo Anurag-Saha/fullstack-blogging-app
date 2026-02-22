@@ -9,7 +9,7 @@ exports.createPost = async (req, res) => {
     });
 
     res.status(201).json(post);
-  } catch {
+  } catch (err) {
     res.status(400).json({ error: "Post creation failed" });
   }
 };
@@ -25,6 +25,8 @@ exports.getAllPosts = async (req, res) => {
 exports.getSinglePost = async (req, res) => {
   const post = await Post.findById(req.params.id)
     .populate('author', 'username');
+
+  if (!post) return res.status(404).json({ error: "Post not found" });
 
   res.json(post);
 };
@@ -58,4 +60,29 @@ exports.deletePost = async (req, res) => {
   await post.deleteOne();
 
   res.json({ message: "Post deleted" });
+};
+
+exports.toggleLike = async (req, res) => {
+  try {
+    const post = await Post.findById(req.params.id);
+
+    if (!post)
+      return res.status(404).json({ error: "Post not found" });
+
+    const userId = req.user.id;
+
+    if (post.likes.includes(userId)) {
+      post.likes = post.likes.filter(
+        id => id.toString() !== userId
+      );
+    } else {
+      post.likes.push(userId);
+    }
+
+    await post.save();
+
+    res.json({ likes: post.likes.length });
+  } catch (err) {
+    res.status(500).json({ error: "Like failed" });
+  }
 };
